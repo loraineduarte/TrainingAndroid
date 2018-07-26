@@ -2,8 +2,11 @@ package training.trainingandroid;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -16,5 +19,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ListView listaAlunos = findViewById(R.id.lista_alunos);
         ArrayAdapter<String> adapter = new ArrayAdapter <String> (this, android.R.layout.simple_list_item_1, alunos);
         listaAlunos.setAdapter(adapter);
+
+
     }
 }
