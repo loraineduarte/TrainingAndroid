@@ -1,5 +1,6 @@
 package training.trainingandroid;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,15 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter <String> (this, android.R.layout.simple_list_item_1, alunos);
         listaAlunos.setAdapter(adapter);
 
+        Button novoAluno = (Button) findViewById (R.id.novo_aluno);
 
+        novoAluno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                Intent intentVaiProFormulario = new Intent (ListaAlunosActivity.this, FormularioActivity.class);
+                startActivity(intentVaiProFormulario);
+
+            }
+        });
     }
 }
