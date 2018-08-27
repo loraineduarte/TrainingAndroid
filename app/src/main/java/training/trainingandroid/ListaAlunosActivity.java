@@ -9,27 +9,38 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import dao.AlunoDAO;
+
 public class ListaAlunosActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
-
-        String [] alunos= {"Daniel","Ronaldo", "Jeferson", "Felipe"};
-        ListView listaAlunos = findViewById(R.id.lista_alunos);
-        ArrayAdapter<String> adapter = new ArrayAdapter <String> (this, android.R.layout.simple_list_item_1, alunos);
-        listaAlunos.setAdapter(adapter);
-
-        Button novoAluno = (Button) findViewById (R.id.novo_aluno);
-
+        Button novoAluno = (Button) findViewById(R.id.novo_aluno);
         novoAluno.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v) {
-                Intent intentVaiProFormulario = new Intent (ListaAlunosActivity.this, FormularioActivity.class);
-                startActivity(intentVaiProFormulario);
-
+            public void onClick(View view) {
+            Intent intentVaiProFormuIario = new  Intent(ListaAlunosActivity.this,  FormularioActivity.class);
+            startActivity(intentVaiProFormuIario);
             }
         });
+    }
+
+    private void carregaLista()  {
+        AlunoDAO dao = new AlunoDAO(this);
+        List<Aluno> alunos = dao.buscaAlunos(); dao.close();
+
+        ListView listaAlunos = (ListView)  findViewById(R.id.lista_alunos);
+        ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this,  android.R.layout.simple_list_item_1, alunos);
+        listaAlunos.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        carregaLista();
     }
 }
