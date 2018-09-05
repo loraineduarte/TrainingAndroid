@@ -1,13 +1,16 @@
-package training.trainingandroid;
+package model;
 
-/**
- * Created by loraine.duarte on 27/07/2018.
- */
 
-public class Aluno {
+import java.io.Serializable;
+
+public class Aluno implements Serializable {
 
     private Long id;
     private String nome;
+    private String endereco;
+    private String telefone;
+    private String site;
+    private Double nota;
 
     public Long getId() {
         return id;
@@ -57,13 +60,8 @@ public class Aluno {
         this.nota = nota;
     }
 
-    private String endereco;
-    private String telefone;
-    private String site;
-    private Double nota;
-
     @Override
-    public String toString()  {
+    public String toString() {
         return getId() + " - " + getNome();
     }
 }
