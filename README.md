@@ -7,15 +7,10 @@ um certo tipo e não outro.
 
 No código inclui :
 -Intents;
-
 -Transações entre activies;
-
 -Banco de dados simples com SqLite;
-
 -Listagens;
-
 -Menus;
-
 -Constraint Layouts e ajustes de itens;
 
 É um ponto inicial para quem deseja aprender a trabalhar com a plataforma Android. 
