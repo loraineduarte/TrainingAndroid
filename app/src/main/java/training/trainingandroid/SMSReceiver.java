@@ -13,6 +13,8 @@ public class SMSReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        String telefone = sms.getPhone();
+
         Toast.makeText(context, "Chegou um SMS!", Toast.LENGTH_SHORT).show();
 
     }
