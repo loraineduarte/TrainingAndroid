@@ -4,14 +4,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,6 +20,7 @@ import java.util.List;
 
 import adapter.AlunosAdapter;
 import dao.AlunoDAO;
+import dao.WebClient;
 import model.Aluno;
 
 public class ListaAlunosActivity extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
 
-        listaAlunos = (ListView) findViewById(R.id.lista_alunos);
+        listaAlunos = findViewById(R.id.lista_alunos);
 
         listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -44,7 +45,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
             }
         });
 
-        Button novoAluno = (Button) findViewById(R.id.novo_aluno);
+        Button novoAluno = findViewById(R.id.novo_aluno);
         novoAluno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +56,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         registerForContextMenu(listaAlunos);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lista_alunos, menu);
+
+        return true;
+    }
+
 
     private void carregaLista() {
         AlunoDAO dao = new AlunoDAO(this);
@@ -126,6 +135,26 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_enviar_notas:
+
+                AlunoDAO dao = new AlunoDAO(this);
+                List<Aluno> alunos = dao.buscaAlunos();
+                dao.close();
+
+                AlunoConverter conversor = new AlunoConverter();
+                String json = conversor.converteParaJSON(alunos);
+
+                WebClient client = new WebClient();
+                String resposta = client.post(json);
+                Toast.makeText(this, resposta, Toast.LENGTH_LONG).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
